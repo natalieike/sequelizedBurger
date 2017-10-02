@@ -1,0 +1,13 @@
+.panel{
+	margin-top: 20%;
+	border: 1px solid #000d1a;
+}
+
+.darkerBlue{
+	background-color: #e6f2ff;
+	color: #000d1a;
+}
+
+.navbar-fixed-bottom{
+	padding: 10px;
+}

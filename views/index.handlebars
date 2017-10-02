@@ -1,0 +1,83 @@
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-6">
+				<div class="panel">
+  				<div class="panel-heading text-center darkerBlue">
+    				<h3 class="panel-title">Available Burgers</h3>
+  				</div> <!--/.panel-heading-->
+  				<div class="panel-body">
+						<table class="table">
+							<tr>
+								<th>Burger Name</th>
+								<th>Eat!</th>
+							</tr>
+							{{#each burgerAvailable}}
+								<tr>
+									<td>{{burger_name}}</td>
+									<td>
+										<form action="/{{id}}?_method=PUT" method="POST">
+  										<input type="hidden" name="id" value="{{id}}">
+  										<button type="submit"class="btn btn-info" aria-label="Center Align" >
+												<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  										</button>
+										</form>
+								</tr>
+							{{/each}}
+						</table>
+				  </div> <!--/.panel-body-->
+				</div> <!--/.panel-->
+			</div> <!--/.col-md-6-->
+					
+			<div class="col-md-6">
+				<div class="panel">
+  				<div class="panel-heading text-center darkerBlue">
+    				<h3 class="panel-title">Burgers Eaten</h3>
+  				</div> <!--/.panel-heading-->
+  				<div class="panel-body">
+						<table class="table">
+							<tr>
+								<th>Burger Name</th>
+								<th>Date Eaten</th>
+							</tr>
+							{{#each burgerEaten}}
+								<tr>
+									<td>{{burger_name}}</td>
+									<td>{{burger_date}}</button>
+								</tr>
+							{{/each}}
+						</table>
+				  </div> <!--/.panel-body-->
+				</div> <!--/.panel-->
+			</div> <!--/.col-md-6-->			
+
+		</div> <!--/.row-->
+	</div> <!--/.container-->
+
+		<nav class="navbar navbar-fixed-bottom darkerBlue">
+  	<div class="container">
+  		<div class="navbar-left">
+  			<form method="POST" action="/" class="form-inline">
+  				<div class="form-group">
+    				<label for="burgerName">Add a Burger to Eat</label>
+    				<input type="input" class="form-control" id="burgerName" name="burgerName" placeholder="Burger Name">
+  				</div> <!--/.form-group-->
+  				<button type="submit" class="btn btn-info">Submit</button>
+				</form>
+			</div> <!--/.navbar-left-->
+			<div class="navbar-right">
+  			<form action="/?_method=PUT" method="POST" class="form-inline">
+    			<label for="burgerName">Edit a Burger</label>
+  				<select name="id" class="form-control">
+						{{#each burgerAvailable}}
+							<option value="{{this.id}}">{{this.burger_name}}</option>
+						{{/each}}
+					</select>
+  				<div class="form-group">
+    				<input type="input" class="form-control" id="burgerName" name="burgerName" placeholder="New Burger Name">
+  				</div> <!--/.form-group-->
+  				<button type="submit" class="btn btn-info">Save</button>
+				</form>				
+			</div> <!--/.navbar-right-->
+   	</div> <!--/.container-->
+	</nav>
