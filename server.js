@@ -5,23 +5,29 @@ var bodyParser = require("body-parser");
 var handlebars = require("express-handlebars");
 var brouter = require("./controllers/burgers_controller.js");
 
-//Set up Express
-var app = express();
-var PORT = process.env.PORT || 8080;
+//Initialize database
+var db = require("./models");
+db.sequelize.sync().then(function(){
 
-//Set up method-override, body-parser, and handlebars
-app.use(methodOverride("_method"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.engine("handlebars", handlebars({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+	//Set up Express
+	var app = express();
+	var PORT = process.env.PORT || 8080;
 
-//Send to controller
-app.use(express.static(__dirname + '/public'))
-app.use("/", brouter);
+	//Set up method-override, body-parser, and handlebars
+	app.use(methodOverride("_method"));
+	app.use(bodyParser.urlencoded({ extended: true }));
+	app.engine("handlebars", handlebars({ defaultLayout: "main" }));
+	app.set("view engine", "handlebars");
 
-//Initialize server
-app.listen(PORT, function() {
-  console.log('Listening on port ' + PORT);
+	//Send to controller
+	app.use(express.static(__dirname + '/public'))
+	app.use("/", brouter);
+
+	//Initialize server
+	app.listen(PORT, function() {
+  	console.log('Listening on port ' + PORT);
+	});
+}).catch(function(err){
+	return console.log(err);
 });
-
 

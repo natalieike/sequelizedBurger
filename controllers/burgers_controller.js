@@ -1,6 +1,6 @@
 //Dependencies
 var express = require("express");
-var burger = require("../models/burger.js");
+var orm = require("../models");
 var brouter = express.Router();
 var path = require("path");
 var bodyParser = require("body-parser");
@@ -18,10 +18,9 @@ brouter.get("/style", function(req, res){
 
 //Get all of the Burgers, sort by Eaten or Available, and render index
 brouter.get("/", function(req, res){
-	burger.getAllBurgers(function(err, data){
-		if(err){
-			return console.log(err);
-		}
+	orm.burger.findAll({
+		attributes: ["id", "burger_name", "burger_devoured", "burger_date"]
+	}).then(function(data){
 		var available = [];
 		var eaten = [];
 		for(var i = 0; i < data.length; i++){
@@ -32,36 +31,57 @@ brouter.get("/", function(req, res){
 			}
 		}
 		res.render("index", {burgerAvailable: available, burgerEaten: eaten});
-	});
+	}).catch(function(err){
+    console.log(err);
+    res.status(400).end();
+  });
 });
 
 //Add a new burger, re-direct to get to re-render page
 brouter.post("/", function(req, res){
-	burger.addBurger(req.body.burgerName, function(err, data){
-		if(err){
-			return console.log(err);
-		}
+	var burgerName = req.body.burgerName;
+	orm.burger.create({
+		burger_name: burgerName
+	}).then(function(data){
 		res.redirect("/");
-	});
+	}).catch(function(err){
+    console.log(err);
+    res.status(400).end();
+  });
 });
 //Update an existing burger, re-direct to get to re-render page
 brouter.put("/", function(req, res){
-	burger.updateBurger(req.body.id, req.body.burgerName, function(err, data){
-		if(err){
-			return console.log(err);
+	var id = req.body.id;
+	var burgerName = req.body.burgerName
+	orm.burger.update({
+		burger_name: burgerName
+	},{
+		where: {
+			id: id
 		}
+	}).then(function(data){
 		res.redirect("/");
-	});
+	}).catch(function(err){
+    console.log(err);
+    res.status(400).end();
+  });
 });
 
 //Update a burger to Eaten, re-direct to get to re-render page
 brouter.put("/:id", function(req, res){
-	burger.eatBurger(req.body.id, function(err, data){
-		if(err){
-			return console.log(err);
+	var id = req.body.id;
+	orm.burger.update({
+		burger_devoured: true
+	}, {
+		where: {
+			id: id
 		}
+	}).then(function(data){
 		res.redirect("/");
-	});
+	}).catch(function(err){
+    console.log(err);
+    res.status(400).end();
+  });
 });
 
 //export Router
