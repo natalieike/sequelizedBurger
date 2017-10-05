@@ -1,6 +1,11 @@
-.panel{
-	margin-top: 20%;
+.panel-top{
+	margin-top: 10%;
 	border: 1px solid #000d1a;
+}
+
+.panel-bottom{
+	margin-bottom: 10%;
+	border: 1px solid #000d1a;	
 }
 
 .darkerBlue{

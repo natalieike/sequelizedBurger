@@ -23,5 +23,14 @@ module.exports = function(sequelize, DataTypes){
 			defaultValue: DataTypes.NOW
 		}
 	});
+
+	burger.associate = function(models){
+		burger.belongsTo(models.customer, {
+			foreignKey: {
+				allowNull: true
+			}
+		});
+	};
+
 	return burger;
 };

@@ -7,7 +7,7 @@ var brouter = require("./controllers/burgers_controller.js");
 
 //Initialize database
 var db = require("./models");
-db.sequelize.sync().then(function(){
+db.sequelize.sync({ force: false }).then(function(){
 
 	//Set up Express
 	var app = express();

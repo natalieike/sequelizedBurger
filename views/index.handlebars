@@ -1,8 +1,28 @@
 	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-top">
+					<div class="panel-heading text-center darkerBlue">
+						<h3 class="panel-title">Manage Orders</h3>
+					</div> <!--/.panel-heading -->
+					<div class="panel-body">
+  					<form method="POST" action="/customer" class="form-inline">
+  						<div class="form-group">
+    						<label for="burgerName">Add a Customer</label>
+    						<input type="input" class="form-control" id="customerName" name="customerName" placeholder="Customer Name">
+  						</div> <!--/.form-group-->
+  						<button type="submit" class="btn btn-info">Submit</button>
+						</form>					
+					</div> <!--/.panel-body-->
+				</div> <!--/.panel-->
+			</div> <!--/.col-md-10-->
+		</div> <!--/.row-->
+
 		<div class="row">
 
 			<div class="col-md-6">
-				<div class="panel">
+				<div class="panel panel-bottom">
   				<div class="panel-heading text-center darkerBlue">
     				<h3 class="panel-title">Available Burgers</h3>
   				</div> <!--/.panel-heading-->
@@ -17,11 +37,17 @@
 									<td>{{burger_name}}</td>
 									<td>
 										<form action="/{{id}}?_method=PUT" method="POST">
+											<select name="cust_id" class="form-control">
+												{{#each customer}}
+													<option value="{{this.id}}">{{this.customer_name}}</option>
+												{{/each}}
+											</select>
   										<input type="hidden" name="id" value="{{id}}">
   										<button type="submit"class="btn btn-info" aria-label="Center Align" >
 												<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
   										</button>
 										</form>
+									</td>
 								</tr>
 							{{/each}}
 						</table>
@@ -30,7 +56,7 @@
 			</div> <!--/.col-md-6-->
 					
 			<div class="col-md-6">
-				<div class="panel">
+				<div class="panel panel-bottom">
   				<div class="panel-heading text-center darkerBlue">
     				<h3 class="panel-title">Burgers Eaten</h3>
   				</div> <!--/.panel-heading-->
@@ -39,11 +65,13 @@
 							<tr>
 								<th>Burger Name</th>
 								<th>Date Eaten</th>
+								<th>Customer</th>
 							</tr>
 							{{#each burgerEaten}}
 								<tr>
 									<td>{{burger_name}}</td>
-									<td>{{burger_date}}</button>
+									<td>{{burger_date}}</td>
+									<td>{{customerName}}</td>
 								</tr>
 							{{/each}}
 						</table>
